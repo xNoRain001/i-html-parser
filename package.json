@@ -1,6 +1,6 @@
 {
   "name": "i-html-parser",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "HTML parser.",
   "keywords": [
     "html-parser"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git://github.com/xNoRain001/i-html-parser.git"
   },
-  "main": "./dist/i-html-parser.js",
+  "main": "./dist/html-parser.min.js",
   "scripts": {
     "test": "jest",
     "build": "rollup -c -w"
