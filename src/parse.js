@@ -57,7 +57,7 @@ const parse = (html, options = {}) => {
         } else {
           // lang="en">
           // foo="bar">foo
-          m.replace(/\s*(.*?)=['"]\s*([\s\S]*?)\s*['"]/g, (_, $1, $2) => {
+          m = m.replace(/\s*(.*?)=['"]\s*([\s\S]*?)\s*['"]/g, (_, $1, $2) => {
             const attr = $1.trimStart()
 
             attrs[attr] = $2
@@ -71,6 +71,8 @@ const parse = (html, options = {}) => {
 
             //   node.styles = styles
             // }
+
+            return ''
           })
 
           const text = m.match(/>([\s\S]*)/)[1]
@@ -91,6 +93,16 @@ const parse = (html, options = {}) => {
       }
     } else {
       parent = parent.parent
+
+      // </i> some text...
+      const text = m.match(/<\/[a-z]+>\s*(.+)\s*/)?.[1]
+
+      if (text) {
+        parent.children.push({
+          type: 'text',
+          text
+        })
+      }
     }
   }
 
