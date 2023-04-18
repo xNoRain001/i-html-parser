@@ -16,6 +16,11 @@ import HTML from 'i-html-parser'
 const HTML = require('i-html-parser')
 ```
 
+```html
+<!-- Script -->
+<script src="../dist/html-parser.min.js"></script>
+```
+
 ```js
 const htmlStr = `
   <!DOCTYPE html>
@@ -28,9 +33,7 @@ const htmlStr = `
     <title>Document</title>
   </head>
 
-  <body>
-
-  </body>
+  <body></body>
 
   </html>
 `
