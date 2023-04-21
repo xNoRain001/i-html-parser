@@ -18,6 +18,7 @@ const parse = (html, options = {}) => {
     children: []
   }
   const matched = html.match(regexp)
+  const nodes = []
   let parent = ast
 
   for (let i = 0, l = matched.length; i < l; i++) {
@@ -87,6 +88,7 @@ const parse = (html, options = {}) => {
       }
 
       parent.children.push(node)
+      nodes.push(node)
 
       if (!selfClosingTags.hasOwnProperty(tagName)) {
         parent = node
@@ -106,7 +108,7 @@ const parse = (html, options = {}) => {
     }
   }
 
-  return ast
+  return { ast, nodes }
 }
 
 export default parse
