@@ -38,6 +38,6 @@ const htmlStr = `
   </html>
 `
 
-const ast = HTML.parse(htmlStr)
+const { ast } = HTML.parse(htmlStr)
 const str = HTML.stringify(ast)
 ```
