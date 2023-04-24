@@ -29,6 +29,6 @@ const examples = {
 
 test('test line code', () => {
   for (const key in examples) {
-    expect(HTML.parse(key)).toStrictEqual(examples[key])
+    expect(HTML.parse(key).ast).toStrictEqual(examples[key])
   }
 })

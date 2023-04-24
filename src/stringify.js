@@ -1,11 +1,13 @@
-import selfClosingTags from './self-closing-tags'
+const selfClosingTags = require('./self-closing-tags')
 
 const genElement = node => {
   let res = ''
-  const { attrs, tagName, children } = node
+  const { attrs, tagName, children, tailwindExp } = node
   const keys = Object.keys(attrs)
-  const _attrs = keys.length ? ` ${ genAttrs(attrs, keys) }` : ''
-  
+  const _attrs = keys.length || tailwindExp 
+    ? ` ${ genAttrs(attrs, keys, tailwindExp) }` 
+    : ''
+
   res += `<${ tagName }${ _attrs }>`
 
   if (!selfClosingTags.hasOwnProperty(tagName)) {
@@ -19,17 +21,30 @@ const genElement = node => {
 
 const genText = node => node.text
 
-const genAttrs = (attrs, keys) => {
+const genAttrs = (attrs, keys, tailwindExp) => {
   let res = ''
 
   for (let i = 0, l = keys.length; i < l; i++) {
     const attr = keys[i]
     const value = attrs[attr]
 
-    res += `${ attr }="${ value }" `
+    if (attr !== 'class') {
+      res += `${ attr }="${ value }" `
+    }
   }
 
-  return res.slice(0, -1)
+  if (tailwindExp) {
+    // don't add tailwind expression by attr.class because element selector.
+    res += `class="${ tailwindExp } `
+
+    if (attrs.class) {
+      res += `${ Object.keys(attrs.class).join() }`
+    }
+
+    res += '"'
+  }
+
+  return res
 }
 
 const stringify = ast => {
@@ -49,4 +64,4 @@ const stringify = ast => {
   return html
 }
 
-export default stringify
+module.exports = stringify
